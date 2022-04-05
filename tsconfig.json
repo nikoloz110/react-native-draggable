@@ -7,9 +7,10 @@
       "jsx": "react",
       "lib": ["es6"],
       "moduleResolution": "node",
-      "noEmit": true,
-      "strict": true,
-      "target": "esnext"
+      "noEmit": false,
+      "strict": false,
+      "target": "esnext",
+      "skipLibCheck": true,
     },
     "exclude": [
       "node_modules",

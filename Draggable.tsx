@@ -40,7 +40,7 @@ interface IProps {
     touchableOpacityProps?: object;
     onDrag?: (e: GestureResponderEvent, gestureState: PanResponderGestureState) => void;
     onShortPressRelease?: (event: GestureResponderEvent) => void;
-    onDragRelease?: (e: GestureResponderEvent, gestureState: PanResponderGestureState) => void;
+    onDragRelease?: (e: GestureResponderEvent, gestureState: PanResponderGestureState, reversePosition: () => void) => void;
     onLongPress?: (event: GestureResponderEvent) => void;
     onPressIn?: (event: GestureResponderEvent) => void;
     onPressOut?: (event: GestureResponderEvent) => void;
@@ -125,7 +125,7 @@ export default function Draggable(props: IProps) {
     (e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
       isDragging.current = false;
       if (onDragRelease) {
-        onDragRelease(e, gestureState);
+        onDragRelease(e, gestureState, reversePosition);
         onRelease(e, true);
       }
       if (!shouldReverse) {
@@ -179,6 +179,7 @@ export default function Draggable(props: IProps) {
       onPanResponderGrant,
       onPanResponderMove: Animated.event([], {
         // Typed incorrectly https://reactnative.dev/docs/panresponder
+        // @ts-ignore
         listener: handleOnDrag,
         useNativeDriver: false,
       }),
@@ -199,6 +200,7 @@ export default function Draggable(props: IProps) {
     }
     return () => {
         // Typed incorrectly
+      // @ts-ignore
       curPan.removeAllListeners();
     };
   }, [shouldReverse]);
