@@ -40,7 +40,7 @@ interface IProps {
     touchableOpacityProps?: object;
     onDrag?: (e: GestureResponderEvent, gestureState: PanResponderGestureState) => void;
     onShortPressRelease?: (event: GestureResponderEvent) => void;
-    onDragRelease?: (e: GestureResponderEvent, gestureState: PanResponderGestureState, reversePosition: () => void) => void;
+    onDragRelease?: (e: GestureResponderEvent, gestureState: PanResponderGestureState, bounds: { top: number; left: number; bottom: number; right: number }, reversePosition: () => void) => void;
     onLongPress?: (event: GestureResponderEvent) => void;
     onPressIn?: (event: GestureResponderEvent) => void;
     onPressOut?: (event: GestureResponderEvent) => void;
@@ -125,7 +125,7 @@ export default function Draggable(props: IProps) {
     (e: GestureResponderEvent, gestureState: PanResponderGestureState) => {
       isDragging.current = false;
       if (onDragRelease) {
-        onDragRelease(e, gestureState, reversePosition);
+        onDragRelease(e, gestureState, getBounds(), reversePosition);
         onRelease(e, true);
       }
       if (!shouldReverse) {
